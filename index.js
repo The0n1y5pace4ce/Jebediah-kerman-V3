@@ -21,7 +21,7 @@ client.commands = new Collection();
 client.events = new Collection();
 client.tools = require('./Utils/Tools');
 
-// require("./Handlers/AntiCrash.js")(client);
+require("./Handlers/AntiCrash.js")(client);
 
 loadEvents(client);
 loadButtons(client);

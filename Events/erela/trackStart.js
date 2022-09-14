@@ -27,8 +27,12 @@ module.exports = {
       new ButtonBuilder()
         .setCustomId("shuffle")
         .setLabel("🔀")
-        .setStyle(Primary)
+        .setStyle(Primary),
     );
+
+    const buttonRow2 = new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setCustomId('stop').setLabel("⏸").setStyle(Primary)
+    )
 
     const nowPlaying = new EmbedBuilder()
       .setColor("Blurple")
@@ -47,7 +51,7 @@ module.exports = {
 
     let message = await client.channels.cache
       .get(player.textChannel)
-      .send({ embeds: [nowPlaying], components: [buttonRow] });
+      .send({ embeds: [nowPlaying], components: [buttonRow, buttonRow2] });
 
     setTimeout(() => message.delete(), track.duration);
   },
