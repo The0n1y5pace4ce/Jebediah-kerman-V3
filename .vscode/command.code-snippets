@@ -1,0 +1,22 @@
+{
+    "": {
+    "prefix": "!command",
+    "body": [
+      "const { SlashCommandBuilder, ChatInputCommandInteraction, CommandInteraction, PermissionFlagsBits } = require('discord.js')",
+      "",
+      "module.exports = {",
+      "    data: new SlashCommandBuilder()",
+      "    .setName('$0')",
+      "    .setDescription('$1'),",
+      "    /**",
+      "     * @param {ChatInputCommandInteraction} interaction",
+      "     */",
+      "    execute(interaction) {",
+      "        $2",
+      "    }",
+      "}",
+      ""
+    ],
+    "description": ""
+    }
+}

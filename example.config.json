@@ -1,0 +1,21 @@
+{
+    "token": "",
+    "developerGuild": "",
+    "database": "",
+    "spotifyClientID": "",
+    "spotifySecret": "",
+    "webhookURL": "",
+    "devID": "",
+        
+    "nodes": [
+        {
+            "id": "main",
+            "host": "",
+            "port": ,
+            "password": "",
+            "retryAmount": 15, 
+            "retryDelay": 6000, 
+            "secure": true
+        }
+    ]
+}
