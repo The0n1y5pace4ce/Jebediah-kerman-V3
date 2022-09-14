@@ -16,6 +16,15 @@
             "retryAmount": 15, 
             "retryDelay": 6000, 
             "secure": true
+        },
+        {
+            "id": "backup",
+            "host": "",
+            "port": ,
+            "password": "",
+            "retryAmount": 15,
+            "retryDelay": 6000,
+            "secure": true
         }
     ]
 }
