@@ -4,10 +4,13 @@ const { WebhookURL } = require('../config.json');
 const webhook = new WebhookClient({
     url: WebhookURL,
 });
+const { magenta, yellow } = require('chalk');
 
-module.exports = (client) => {
+async function antiCrash(client) {
     const embed = new EmbedBuilder()
         .setColor("Red");
+
+    console.log(magenta('[Anticrash] »'), yellow('Connected Successfully'))
     
     client.on("error", (err) => {
         console.log(err);
@@ -25,7 +28,7 @@ module.exports = (client) => {
         console.log(reason, "\n", promise);
 
         embed
-            .setTitle("Unhandled Rejection/Catch")
+            .setTitle("<:error:1019744274612502569> | Unhandled Rejection/Catch")
             .setURL("https://nodejs.org/api/process.html#event-unhandledrejection")
             .addFields(
                 { name: "Reason", value: `\`\`\`${inspect(reason, { depth: 0 }).slice(0, 1000)}\`\`\`` },
@@ -40,7 +43,7 @@ module.exports = (client) => {
         console.log(err, "\n", origin);
 
         embed
-            .setTitle("Uncaught Exception/Catch")
+            .setTitle("<:error:1019744274612502569> | Uncaught Exception/Catch")
             .setURL("https://nodejs.org/api/process.html#event-uncaughtexception")
             .addFields(
                 { name: "Error", value: `\`\`\`${inspect(err, { depth: 0 }).slice(0, 1000)}\`\`\`` },
@@ -55,7 +58,7 @@ module.exports = (client) => {
         console.log(err, "\n", origin);
 
         embed
-            .setTitle("Uncaught Exception Monitor")
+            .setTitle("<:error:1019744274612502569> | Uncaught Exception Monitor")
             .setURL("https://nodejs.org/api/process.html#event-uncaughtexceptionmonitor")
             .addFields(
                 { name: "Error", value: `\`\`\`${inspect(err, { depth: 0 }).slice(0, 1000)}\`\`\`` },
@@ -70,7 +73,7 @@ module.exports = (client) => {
         console.log(warn);
 
         embed
-            .setTitle("Uncaught Exception Monitor Warning")
+            .setTitle("<:error:1019744274612502569> | Uncaught Exception Monitor Warning")
             .setURL("https://nodejs.org/api/process.html#event-warning")
             .addFields(
                 { name: "Warning", value: `\`\`\`${inspect(warn, { depth: 0 }).slice(0, 1000)}\`\`\`` }
@@ -79,4 +82,7 @@ module.exports = (client) => {
 
         return webhook.send({ embeds: [embed] });
     });
-};
+
+}
+
+module.exports = { antiCrash }

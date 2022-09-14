@@ -11,6 +11,7 @@ const { Manager } = require("erela.js");
 const { loadEvents } = require('./Handlers/eventHandler')
 const { loadButtons } = require('./Handlers/buttonHandler')
 const { loadErela } = require('./Handlers/erela')
+const { antiCrash } = require('./Handlers/AntiCrash')
 
 
 const client = new Client({ intents: [Guilds, GuildMembers, GuildMessages, GuildVoiceStates, MessageContent], partials: [User, Message, GuildMember, ThreadMember] }) 
@@ -21,11 +22,10 @@ client.commands = new Collection();
 client.events = new Collection();
 client.tools = require('./Utils/Tools');
 
-require("./Handlers/AntiCrash.js")(client);
-
 loadEvents(client);
 loadButtons(client);
 loadErela(client);
+antiCrash(client)
 
 
 client.manager = new Manager({
