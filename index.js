@@ -12,6 +12,7 @@ const { loadEvents } = require('./Handlers/eventHandler')
 const { loadButtons } = require('./Handlers/buttonHandler')
 const { loadErela } = require('./Handlers/erela')
 const { antiCrash } = require('./Handlers/AntiCrash')
+const { loadModals } = require("./Handlers/modalHandler");
 
 
 const client = new Client({ intents: [Guilds, GuildMembers, GuildMessages, GuildVoiceStates, MessageContent], partials: [User, Message, GuildMember, ThreadMember] }) 
@@ -21,11 +22,13 @@ client.buttons = new Collection();
 client.commands = new Collection();
 client.events = new Collection();
 client.tools = require('./Utils/Tools');
+client.modals = new Collection();
 
 loadEvents(client);
 loadButtons(client);
 loadErela(client);
 antiCrash(client)
+loadModals(client);
 
 
 client.manager = new Manager({
