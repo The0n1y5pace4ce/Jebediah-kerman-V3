@@ -1,11 +1,11 @@
 const { Schema, model } = require("mongoose");
-const ticketCreateSchema = new Schema({
+const ticketOptionsSchema = new Schema({
+  _id: Schema.Types.ObjectId,
   guildId: String,
   channelId: String,
-  categoryId: String, 
-  ticketlog: String,
-  supportRole: String,
-  embedDescription: String,
+  categoryId: String,
+  supportId: String,
+  logsId: String
 });
 
-module.exports = model("ticketSchema", ticketCreateSchema, "userTickets");
+module.exports = model("ticketSchema", ticketOptionsSchema, "guildTicketSchema");

@@ -1,156 +1,208 @@
 const {
-    SlashCommandBuilder,
-    PermissionFlagsBits,
-    ChannelType,
-    ChatInputCommandInteraction,
-    EmbedBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
-  } = require("discord.js");
-  
-  const ticketSchema = require("../../schemas/ticketSchema");
-  
-  module.exports = {
-    data: new SlashCommandBuilder()
-      .setName("ticket")
-      .setDescription("Configure the ticket system")
-      .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
-      .addSubcommand((subcommand) =>
-        subcommand
-          .setName("setup")
-          .setDescription("Setup the ticket system")
-          .addChannelOption((option) => {
-            return option
-              .setName("channel")
-              .setDescription("The channel to send the ticket panel in.")
-              .setRequired(true)
-              .addChannelTypes(ChannelType.GuildText);
-          })
-          .addChannelOption((option) => {
-            return option
-              .setName("category")
-              .setDescription("The category to create the ticket in.")
-              .setRequired(true)
-              .addChannelTypes(ChannelType.GuildCategory);
-          })
-          .addChannelOption((option) => {
-            return option
-              .setName("logging_channel")
-              .setDescription("Logs a ticket after its been closed")
-              .setRequired(true)
-              .addChannelTypes(ChannelType.GuildText);
-          })
-          .addRoleOption((option) => {
-            return option
-              .setName("support_role")
-              .setDescription("The role to assign to support tickets.")
-              .setRequired(true);
-          })
-          .addStringOption((option) => {
-            return option
-              .setName("description")
-              .setDescription("The ticket systems description")
-              .setRequired(false);
-          })
-      )
-      .addSubcommand((subcommand) =>
-        subcommand
-          .setName("delete")
-          .setDescription("Deletes config for the tickets.")
-      ),
-    /**
-     *
-     * @param {ChatInputCommandInteraction} interaction
-     */
-    async execute(interaction) {
-      const ticketSystem = await ticketSchema.findOne({
+  SlashCommandBuilder,
+  ChatInputCommandInteraction,
+  Client,
+  EmbedBuilder,
+  ChannelType,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+} = require("discord.js");
+const { Types } = require("mongoose");
+
+const ticketSchema = require("../../schemas/ticketSchema");
+
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("tickets")
+    .setDescription("Ticket options and setup")
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("setup")
+        .setDescription("Setup the ticket system")
+        .addChannelOption((option) => {
+          return option
+            .setName("channel")
+            .setDescription("channel to send the ticket message in")
+            .setRequired(true)
+            .addChannelTypes(ChannelType.GuildText);
+        })
+        .addChannelOption((option) => {
+          return option
+            .setName("category")
+            .setDescription("Category to create the ticket in")
+            .setRequired(true)
+            .addChannelTypes(ChannelType.GuildCategory);
+        })
+        .addRoleOption((option) => {
+          return option
+            .setName("support-role")
+            .setDescription("Support role for the ticket")
+            .setRequired(true);
+        })
+        .addChannelOption((option) => {
+          return option
+            .setName("ticket-logs")
+            .setDescription("The channel where ticket logs get sent in.")
+            .setRequired(true)
+            .addChannelTypes(ChannelType.GuildText);
+        })
+        .addStringOption((option) => {
+          return option
+            .setName("description")
+            .setDescription("The text to send with the ticket panel")
+            .setRequired(false);
+        })
+    )
+    .addSubcommand((subcommand) =>
+      subcommand.setName("delete").setDescription("Delete the ticket system")
+    ),
+
+  /**
+   *
+   * @param {ChatInputCommandInteraction} interaction
+   * @param {Client} client
+   */
+  async execute(interaction, client) {
+    if (interaction.options.getSubcommand() === "setup") {
+      const channel = interaction.options.getChannel("channel");
+      const category = interaction.options.getChannel("category");
+      const supportRole = interaction.options.getRole("support-role");
+      const description = interaction.options.getString("description");
+      const ticketLogs = interaction.options.getChannel("ticket-logs");
+
+      const data = await ticketSchema.findOne({
         guildId: interaction.guild.id,
       });
-  
-      if (interaction.options.getSubcommand() === "setup") {
-        const channel = interaction.options.getChannel("channel");
-        const category = interaction.options.getChannel("category");
-        const ticketlog = interaction.options.getChannel("logging_channel");
-        const supportRole = interaction.options.getRole("support_role");
-        const description =interaction.options.getString("description") || "Click the `Create Ticket` button below to create a ticket and out support team will be right with you!";
-  
-        if (ticketSystem) {
-          ticketSystem.categoryId = category.id;
-          ticketSystem.channelId = channel.id;
-  
-          ticketSystem.save().catch((err) => {
-            console.log(err);
-          });
-        } else {
-          new ticketSchema({
-            guildId: interaction.guild.id,
-            categoryId: category.id,
-            channelId: channel.id,
-            ticketlog: ticketlog.id,
-            supportRole: supportRole.id,
-          }).save();
-        }
-  
-        channel.send({
-          embeds: [
-            new EmbedBuilder()
-              .setTitle("Create a ticket!")
-              .setDescription(description)
-              .setColor("Blurple"),
-          ],
-          components: [
-            new ActionRowBuilder().setComponents(
-              new ButtonBuilder()
-                .setCustomId("createTicket")
-                .setLabel("Create Ticket!")
-                .setStyle(ButtonStyle.Primary)
-                .setEmoji("<:ticketbadge:1010601796374364171>")
-            ),
-          ],
-        });
-  
+
+      if (data) {
         interaction.reply({
           embeds: [
             new EmbedBuilder()
-              .setTitle("Ticket System Setup")
-              .setDescription("Ticket setup complete!")
+              .setTitle("You have already created the ticket system")
+              .addFields({
+                name: "<:channelemoji:1015242699277873192> Channel",
+                value: `<:reply:1015235235195146301> <#${data.channelId}>`,
+                inline: true,
+              }),
+          ],
+          ephemeral: true,
+        });
+        return;
+      }
+
+      const newSchema = new ticketSchema({
+        _id: Types.ObjectId(),
+        guildId: interaction.guild.id,
+        channelId: channel.id,
+        supportId: supportRole.id,
+        categoryId: category.id,
+        logsId: ticketLogs.id,
+      });
+
+      newSchema.save().catch((err) => console.log(err));
+
+      interaction
+        .reply({
+          embeds: [
+            new EmbedBuilder()
+              .setTitle("Ticket System")
+              .setDescription("Successfully setup ticket system!")
               .addFields(
                 {
-                  name: "Channel",
-                  value: `<#${channel.id}>`,
+                  name: "<:channelemoji:1015242699277873192> Channel",
+                  value: `<:reply:1015235235195146301>  <#${channel.id}>`,
                   inline: true,
                 },
                 {
-                  name: "Category",
-                  value: `${category.name}`,
+                  name: "<:6974orangenwand:1015234855379943454> Support Role",
+                  value: `<:reply:1015235235195146301>  <@&${supportRole.id}>`,
                   inline: true,
+                },
+                {
+                  name: "<:Discussions:1015242700993351711> Panel Description",
+                  value: `<:reply:1015235235195146301>  ${description}`,
+                  inline: true,
+                },
+                {
+                  name: "Ticket Logs",
+                  value: `<#${ticketLogs}>`,
                 }
-              )
-              .setColor("Green"),
+              ),
           ],
-          ephemeral: true
+          ephemeral: true,
+        })
+        .catch(async (err) => {
+          console.log(err);
+          await interaction.reply({
+            content: "An error has occurred...",
+          });
+        });
+
+      const sampleMessage =
+        'Welcome to tickets! Click the "Create Ticket" button to create a ticket and the support team will be right with you!';
+
+      client.channels.cache.get(channel.id).send({
+        embeds: [
+          new EmbedBuilder()
+            .setTitle("Ticket System")
+            .setDescription(description == null ? sampleMessage : description)
+            .setImage(
+              "https://cdn.discordapp.com/attachments/1015320163169611870/1016335587344654346/UTS.png"
+            ),
+        ],
+        components: [
+          new ActionRowBuilder().setComponents(
+            new ButtonBuilder()
+              .setCustomId("createTicket")
+              .setLabel("Create")
+              .setEmoji("<:ticketbadge:1010601796374364171>")
+              .setStyle(ButtonStyle.Primary)
+          ),
+        ],
+      });
+    }
+    if (interaction.options.getSubcommand() === "delete") {
+      const ticketData = await ticketSchema.findOne({
+        guildId: interaction.guild.id,
+      });
+
+      if (!ticketData) {
+        return interaction.reply({
+          embeds: [
+            new EmbedBuilder()
+              .setTitle("Ticket System")
+              .setDescription("You already have a ticket system setup!")
+              .addFields(
+                {
+                  name: "<:SlashCmd:1016055567724326912> Usage",
+                  value: "<:reply:1015235235195146301>  /tickets setup",
+                  inline: true,
+                },
+                {
+                  name: "<:channelemoji:1015242699277873192> Existing channel",
+                  value: `<:reply:1015235235195146301>  <#${ticketData.channelId}>`,
+                }
+              ),
+          ],
+          ephemeral: true,
         });
       }
-      if (interaction.options.getSubcommand() === "delete") {
-        const ticketConfig = await ticketSchema.findOne({
+
+      ticketSchema
+        .findOneAndDelete({
           guildId: interaction.guild.id,
-        });
-        if (!ticketConfig) {
-          const NotCreatedSystem = new EmbedBuilder()
-            .setDescription(
-              "You have not created a ticket system yet! To create one run `/tickets setup`."
-            )
-            .setColor("Red");
-          interaction.reply({ embeds: [NotCreatedSystem] });
-        } else {
-          await ticketSchema.findOneAndDelete({ guildId: interaction.guild.id });
-  
-          const CreatedSystem = new EmbedBuilder()
-            .setDescription("Ticket system successfully deleted!")
-            .setColor("Red");
-          interaction.reply({ embeds: [CreatedSystem] });
-        }
-      }
-    },
-  };
+        })
+        .catch((err) => console.log(err));
+
+      interaction.reply({
+        embeds: [
+          new EmbedBuilder()
+            .setTitle("Ticket System")
+            .setDescription("Successfully deleted the ticket system!"),
+        ],
+        ephemeral: true,
+      });
+    }
+  },
+};
