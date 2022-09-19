@@ -12,13 +12,13 @@ module.exports = {
     .addStringOption(option => 
         option.setName('reason')
             .setDescription("Reason for member kick")
-            .setRequired(true)),
+            .setRequired(false)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
     execute(interaction, guild) {
 		const Target = interaction.options.getMember("user");
-		const Reason = interaction.options.getString("reason");
+		const Reason = interaction.options.getString("reason") || "no reason"
 
 		const success = new EmbedBuilder()
 		.setDescription(`<:yes:895520458152226906> **${Target} was Successfully kicked**\n ||This Member was kicked for ${Reason}||`)
