@@ -13,7 +13,7 @@ const {
 } = require("@discordjs/builders");
 
 const { default: mongoose } = require("mongoose");
-const reportSchema = require("../../schemas/reportSchema");
+const reportSchema = require("../../Structures/schemas/reportSchema");
 
 module.exports = {
   name: "interactionCreate",

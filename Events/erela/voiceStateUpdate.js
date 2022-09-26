@@ -1,6 +1,6 @@
 const { VoiceState, PermissionsBitField, EmbedBuilder } = require("discord.js");
 const { Speak } = PermissionsBitField.Flags;
-const client = require("../../index.js");
+const client = require("../../Structures/index.js");
 
 module.exports = {
   name: "voiceStateUpdate",

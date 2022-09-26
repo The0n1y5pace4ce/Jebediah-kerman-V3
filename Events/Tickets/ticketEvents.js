@@ -9,8 +9,8 @@ const {
   } = require("discord.js");
   const { Types } = require("mongoose");
   
-  const ticketSchema = require("../../schemas/ticketSchema");
-  const userSchema = require("../../schemas/userSchema");
+  const ticketSchema = require("../../Structures/schemas/ticketSchema");
+  const userSchema = require("../../Structures/schemas/userSchema");
   
   const { createTranscript } = require("discord-html-transcripts");
   

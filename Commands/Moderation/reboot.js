@@ -1,4 +1,4 @@
-const { devID } = require('../../config.json');
+const { devID } = require('../../Structures/config.json');
 const { SlashCommandBuilder, ChatInputCommandInteraction, CommandInteraction, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {

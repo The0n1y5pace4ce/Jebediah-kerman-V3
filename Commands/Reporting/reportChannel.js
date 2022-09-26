@@ -5,7 +5,7 @@ const {
     EmbedBuilder,
   } = require("discord.js");
   const mongoose = require("mongoose");
-  const supportSchema = require("../../schemas/reportSchema");
+  const supportSchema = require("../../Structures/schemas/reportSchema");
   
   module.exports = {
     data: new SlashCommandBuilder()

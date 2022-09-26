@@ -17,6 +17,7 @@ module.exports = {
                 .setDescription('Query for the docs search')
                 .setRequired(true)
     ),
+    developer: true,
     /**
      * @param {ChatInputCommandInteraction} interaction
      */

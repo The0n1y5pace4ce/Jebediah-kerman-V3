@@ -1,4 +1,4 @@
-const client = require("../../index.js");
+const client = require("../../Structures/index.js");
 const {
   EmbedBuilder,
   ActionRowBuilder,

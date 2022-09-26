@@ -2,7 +2,7 @@
   "name": "jeb_3.0",
   "version": "1.0.0",
   "description": "<img src=\"https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white\" /> <img src=\"https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E\" /> <img src=\"https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white\" />",
-  "main": "index.js",
+  "main": "Structures/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --no-warnings index.js"

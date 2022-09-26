@@ -7,7 +7,7 @@ const {
     ButtonStyle,
     PermissionFlagsBits,
   } = require("discord.js");
-  const db = require("../../schemas/embed");
+  const db = require("../../Structures/schemas/embed");
   
   function fetch(channel, msg) {
     return new Promise((resolve, reject) => {

@@ -10,7 +10,7 @@ const {
 } = require("discord.js");
 const { Types } = require("mongoose");
 
-const ticketSchema = require("../../schemas/ticketSchema");
+const ticketSchema = require("../../Structures/schemas/ticketSchema");
 
 module.exports = {
   data: new SlashCommandBuilder()

@@ -1,4 +1,4 @@
-const client = require("../../index.js");
+const client = require("../../Structures/index");
 
 module.exports = {
   name: "raw",

@@ -8,7 +8,7 @@ const {
   GuildMember,
 } = require("discord.js");
 const { default: mongoose } = require("mongoose");
-const joinSchema = require("../../schemas/joinSchema");
+const joinSchema = require("../../Structures/schemas/joinSchema");
 
 module.exports = {
   name: "guildMemberAdd",

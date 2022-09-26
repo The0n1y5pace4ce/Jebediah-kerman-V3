@@ -6,8 +6,8 @@ const {
 } = require("discord.js");
 const genius = require("genius-lyrics");
 const gClient = new genius.Client();
-const { embedPages } = require("../../Utils/pages.js");
-const { progressbar } = require("../../Utils/progressBar.js");
+const { embedPages } = require("../../Structures/Utils/pages.js");
+const { progressbar } = require("../../Structures/Utils/progressBar.js");
 const pms = require("pretty-ms");
 
 module.exports = {

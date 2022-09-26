@@ -8,7 +8,7 @@ const {
   } = require("discord.js");
   
   const mongoose = require("mongoose");
-  const banSchema = require("../../schemas/banSchema");
+  const banSchema = require("../../Structures/schemas/banSchema");
   
   module.exports = {
     data: new SlashCommandBuilder()

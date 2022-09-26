@@ -1,8 +1,8 @@
-const { database } = require("../../config.json");
+const { database } = require("../../Structures/config.json");
 const { Client } = require("discord.js");
 const { mongoose } = require('mongoose')
 const chalk = require("chalk")
-const { loadCommands } = require('../../Handlers/commandHandler')
+const { loadCommands } = require('../../Structures/Handlers/commandHandler')
 
 module.exports = {
   name: "ready",

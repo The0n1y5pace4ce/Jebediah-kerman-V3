@@ -30,7 +30,7 @@ module.exports = {
                     const Response = new EmbedBuilder()
 
                         .setTitle("ERROR")
-                        // .setColor("Red")
+                        .setColor("Red")
                         .addFields(
                             { name: "Error", value: "The subreddit you requested does not exist" }
                         )
@@ -39,7 +39,7 @@ module.exports = {
                 }else if (e){
                     const errorEmbed = new EmbedBuilder()
                         .setTitle("Oh no...")
-                        // .setColor("Red")
+                        .setColor("Red")
                         .addFields(
                             { name: "Error", value: `\`\`\`Please Try Again\`\`\`` }
                         )
