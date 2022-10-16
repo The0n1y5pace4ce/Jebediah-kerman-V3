@@ -1,5 +1,5 @@
 const { EmbedBuilder, PermissionFlagsBits, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
-const db = require("../../schemas/embed");
+const db = require("../../Structures/schemas/embed.js");
 
 module.exports = {
   id: "CEsend",

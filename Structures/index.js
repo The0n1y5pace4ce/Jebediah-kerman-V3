@@ -1,22 +1,22 @@
 const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js')
-const { Guilds, GuildMembers, GuildMessages, GuildVoiceStates, MessageContent } = GatewayIntentBits
-const { User, Message, GuildMember, ThreadMember} = Partials
+const { Guilds, GuildMembers, GuildMessages, GuildVoiceStates, MessageContent, GuildPresences } = GatewayIntentBits
+const { User, Message, GuildMember, ThreadMember, Channel} = Partials
 const fs = require('fs')
 const  { token } = require('./config.json')
-const Deezer = require("erela.js-deezer");
-const Apple = require("better-erela.js-apple").default;
-const Spotify = require("better-erela.js-spotify").default;
-const { Manager } = require("erela.js");
+const { Connectors } = require("shoukaku");
+const { Kazagumo } = require("kazagumo");
+const Spotify = require("kazagumo-spotify");
 
 const { loadEvents } = require('./Handlers/eventHandler')
 const { loadButtons } = require('./Handlers/buttonHandler')
-const { loadErela } = require('./Handlers/erela')
 const { antiCrash } = require('./Handlers/AntiCrash')
 const { loadModals } = require("./Handlers/modalHandler");
 const { loadSelectMenus } = require("./Handlers/selectMenuHandler");
+const { loadShoukakuNodes } = require("./handlers/shoukakuNodes.js");
+const { loadShoukakuPlayer } = require("./handlers/shoukakuPlayer.js");
 
 
-const client = new Client({ intents: [Guilds, GuildMembers, GuildMessages, GuildVoiceStates, MessageContent], partials: [User, Message, GuildMember, ThreadMember] }) 
+const client = new Client({ intents: [Guilds, GuildMembers, GuildMessages, GuildVoiceStates, MessageContent, GuildPresences], partials: [User, Message, GuildMember, ThreadMember, Channel] }) 
 
 client.config = require("./config.json");
 client.buttons = new Collection();
@@ -27,28 +27,39 @@ client.modals = new Collection();
 client.selectMenus = new Collection();
 loadSelectMenus(client);
 
+
 loadEvents(client);
 loadButtons(client);
-loadErela(client);
 antiCrash(client)
 loadModals(client);
+loadShoukakuNodes(client);
+loadShoukakuPlayer(client);
 
-
-client.manager = new Manager({
-  nodes: client.config.nodes,
-  plugins: [
-    new Spotify({
-      clientID: client.config.spotifyClientID,
-      clientSecret: client.config.spotifySecret,
-    }),
-    new Apple(),
-    new Deezer(),
-  ],
-  send: (id, payload) => {
-    let guild = client.guilds.cache.get(id);
-    if (guild) guild.shard.send(payload);
+const kazagumoClient = new Kazagumo(
+  {
+    plugins: [
+      new Spotify({
+        clientId: client.config.spotifyClientID,
+        clientSecret: client.config.spotifySecret,
+      }),
+    ],
+    defaultSearchEngine: "youtube",
+    send: (id, payload) => {
+      let guild = client.guilds.cache.get(id);
+      if (guild) guild.shard.send(payload);
+    },
   },
-});
+  new Connectors.DiscordJS(client),
+  client.config.nodes,
+  {
+    moveOnDisconnect: false,
+    resume: true,
+    reconnectTries: 5,
+    restTimeout: 10000,
+  }
+);
+
+client.manager = kazagumoClient;
 
 module.exports = client;
 

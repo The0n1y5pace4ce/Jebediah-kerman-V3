@@ -1,5 +1,5 @@
 const { PermissionFlagsBits } = require("discord.js");
-const db = require("../../schemas/embed.js");
+const db = require("../../Structures/schemas/embed.js");
 
 module.exports = {
   id: "CEcancel",

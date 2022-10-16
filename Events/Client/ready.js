@@ -1,8 +1,9 @@
 const { database } = require("../../Structures/config.json");
 const { Client } = require("discord.js");
 const { mongoose } = require('mongoose')
-const chalk = require("chalk")
+const { magenta, yellow, green , white} = require("chalk")
 const { loadCommands } = require('../../Structures/Handlers/commandHandler')
+const { Node } = require('shoukaku')
 
 module.exports = {
   name: "ready",
@@ -10,17 +11,16 @@ module.exports = {
   /**
    *
    * @param {Client} client
+   * @param {Node} Node
    */
-  async execute(client) {
-    console.log(chalk.yellow(`---------------------------------------------------------`))
+  async execute(client, node) {
+    console.log(yellow(`---------------------------------------------------------`))
     console.log(" ")
     console.log(`Client is now logged in as ${client.user.username}`);
     console.log(" ")
-    console.log(chalk.yellow(`---------------------------------------------------------`))
+    console.log(yellow(`---------------------------------------------------------`))
 
     loadCommands(client)
-
-    client.manager.init(client.user.id)
 
     if (!database) return;
     mongoose
@@ -29,10 +29,19 @@ module.exports = {
         useUnifiedTopology: true,
       })
       .then(() => {
-        console.log(chalk.yellow(`✅ >>> Successfully connected to MongoDB!`));
+        console.log(yellow(`✅ >>> Successfully connected to MongoDB!`));
       })
       .catch((err) => {
         console.log(err);
       });
+
+      console.log(
+        magenta("[") +
+          magenta("Shoukaku") +
+          magenta("]") +
+          green(" Node ") +
+          white(node.name) +
+          green(" connected!")
+      );
   },
 };

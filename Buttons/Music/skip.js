@@ -1,5 +1,5 @@
 const { ButtonInteraction, EmbedBuilder } = require("discord.js");
-const client = require("../../index");
+const client = require("../../Structures/index.js");
 
 module.exports = {
   id: "skip",
@@ -8,19 +8,18 @@ module.exports = {
    */
   async execute(interaction) {
     const player = client.manager.players.get(interaction.guild.id);
+    const embed = new EmbedBuilder().setColor("Blurple").setTimestamp();
     if (!player) return;
 
-    const skipEmbed = new EmbedBuilder()
-      .setColor("Blurple")
-      .setDescription(`🔹 | Skipped.`)
-      .setFooter({
-        text: `Action executed by ${interaction.user.username}.`,
-        iconURL: interaction.user.avatarURL({ dynamic: true }),
-      })
-      .setTimestamp();
+    await interaction.deferReply();
 
-    await player.stop();
+    embed.setDescription(`🔹 | Skipped.`).setFooter({
+      text: `Action executed by ${interaction.user.username}.`,
+      iconURL: interaction.user.avatarURL({ dynamic: true }),
+    });
 
-    return interaction.reply({ embeds: [skipEmbed] });
+    player.skip();
+
+    return interaction.editReply({ embeds: [embed] });
   },
 };
