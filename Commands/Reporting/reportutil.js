@@ -65,7 +65,7 @@ const {
           const successEmbed = new EmbedBuilder()
             .setColor(0x0099ff)
             .setDescription(
-              `<:FIJI_settings:999672135700189256> Successfully removed the report channel from ${channel.name}!`
+              `Successfully removed the report channel from ${channel.name}!`
             );
           await interaction.reply({
             embeds: [successEmbed],
@@ -101,7 +101,7 @@ const {
           const successEmbed = new EmbedBuilder()
             .setColor(0x0099ff)
             .setDescription(
-              `<:FIJI_settings:999672135700189256> Successfully replaced the report channel with ${channel.name}!`
+              `Successfully replaced the report channel with ${channel.name}!`
             );
           await interaction.reply({
             embeds: [successEmbed],

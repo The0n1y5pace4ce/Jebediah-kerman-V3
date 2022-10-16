@@ -45,7 +45,7 @@ const {
       const successEmbed = new EmbedBuilder()
         .setColor(0x0099ff)
         .setDescription(
-          `<:FIJI_settings:999672135700189256> Successfully set the report channel to ${channel.name}!`
+          `Successfully set the report channel to ${channel.name}!`
         );
       await interaction.reply({
         embeds: [successEmbed],

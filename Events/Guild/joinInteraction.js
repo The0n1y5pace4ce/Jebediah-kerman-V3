@@ -30,7 +30,7 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
               .setColor("Red")
-              .setDescription('<:no:1008052759997718608> You have not set a welcome message channel yet!')
+              .setDescription('You have not set a welcome message channel yet!')
               .addFields({
                 name: "How to setup a welcome channel:",
                 value: "1️⃣ > Do \`/welcome channel enable\`\n2️⃣ > Do \`/welcome channel set <channel>\`"

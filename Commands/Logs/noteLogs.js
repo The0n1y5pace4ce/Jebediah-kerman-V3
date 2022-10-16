@@ -77,8 +77,8 @@ const {
                 );
   
                 embed.addFields({
-                  name: `<:note_emoji_2:1028290390194929814>  ${notes._id}`,
-                  value: `<:replycontinued:1015235683209707534> Note: \`${notes.note}\`\n<:replycontinued:1015235683209707534> Note Date: ${notes.noteDate}\n<:reply:1015235235195146301> Moderator: ${moderator}`,
+                  name: `${notes._id}`,
+                  value: `Note: \`${notes.note}\`\n Note Date: ${notes.noteDate}\n Moderator: ${moderator}`,
                 });
               }
   
@@ -98,8 +98,8 @@ const {
               );
   
               embed.addFields({
-                name: `<:note_emoji_2:1028290390194929814>  ${notes._id}`,
-                value: `<:replycontinued:1015235683209707534> Note: \`${notes.note}\`\n<:replycontinued:1015235683209707534> Note Date: ${notes.noteDate}\n<:reply:1015235235195146301> Moderator: ${moderator}`,
+                name: `${notes._id}`,
+                value: `Note: \`${notes.note}\`\n Note Date: ${notes.noteDate}\n Moderator: ${moderator}`,
               });
             }
   

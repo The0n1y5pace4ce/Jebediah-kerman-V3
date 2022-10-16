@@ -81,8 +81,8 @@ module.exports = {
             new EmbedBuilder()
               .setTitle("You have already created the ticket system")
               .addFields({
-                name: "<:channelemoji:1015242699277873192> Channel",
-                value: `<:reply:1015235235195146301> <#${data.channelId}>`,
+                name: "Channel",
+                value: `<#${data.channelId}>`,
                 inline: true,
               }),
           ],
@@ -110,18 +110,18 @@ module.exports = {
               .setDescription("Successfully setup ticket system!")
               .addFields(
                 {
-                  name: "<:channelemoji:1015242699277873192> Channel",
-                  value: `<:reply:1015235235195146301>  <#${channel.id}>`,
+                  name: "Channel",
+                  value: ` <#${channel.id}>`,
                   inline: true,
                 },
                 {
-                  name: "<:6974orangenwand:1015234855379943454> Support Role",
-                  value: `<:reply:1015235235195146301>  <@&${supportRole.id}>`,
+                  name: "Support Role",
+                  value: ` <@&${supportRole.id}>`,
                   inline: true,
                 },
                 {
-                  name: "<:Discussions:1015242700993351711> Panel Description",
-                  value: `<:reply:1015235235195146301>  ${description}`,
+                  name: "Panel Description",
+                  value: ` ${description}`,
                   inline: true,
                 },
                 {
@@ -156,7 +156,6 @@ module.exports = {
             new ButtonBuilder()
               .setCustomId("createTicket")
               .setLabel("Create")
-              .setEmoji("<:ticketbadge:1010601796374364171>")
               .setStyle(ButtonStyle.Primary)
           ),
         ],
@@ -175,13 +174,13 @@ module.exports = {
               .setDescription("You already have a ticket system setup!")
               .addFields(
                 {
-                  name: "<:SlashCmd:1016055567724326912> Usage",
-                  value: "<:reply:1015235235195146301>  /tickets setup",
+                  name: "Usage",
+                  value: " /tickets setup",
                   inline: true,
                 },
                 {
-                  name: "<:channelemoji:1015242699277873192> Existing channel",
-                  value: `<:reply:1015235235195146301>  <#${ticketData.channelId}>`,
+                  name: "Existing channel",
+                  value: ` <#${ticketData.channelId}>`,
                 }
               ),
           ],

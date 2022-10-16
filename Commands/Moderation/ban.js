@@ -248,7 +248,7 @@ const {
           await newBanSchema.save().catch((err) => console.log(err));
           const successEmbed = new EmbedBuilder()
             .setDescription(
-              `<:yes:1008052758366142464> Ban logs are now enabled in <#${channel.name}>!`
+              `Ban logs are now enabled in <#${channel.name}>!`
             )
             .setColor("#00ff00");
   
@@ -269,7 +269,7 @@ const {
   
           const successEmbed = new EmbedBuilder()
             .setDescription(
-              `<:yes:1008052758366142464> Ban logs are now enabled in <#${channel.id}>!`
+              `Ban logs are now enabled in <#${channel.id}>!`
             )
             .setColor("#00ff00");
   

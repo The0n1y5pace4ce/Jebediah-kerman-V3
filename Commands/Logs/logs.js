@@ -54,13 +54,13 @@ module.exports = {
               );
 
               return [
-                `<:replyAbove:1022900085002088520> Warn ID: ${warn.id}`,
-                `<:replycontinued:1015235683209707534> Moderator: ${
+                `Warn ID: ${warn.id}`,
+                `Moderator: ${
                   moderator || "Moderator left"
                 }`,
-                `<:replycontinued:1015235683209707534> User: ${warn.userId}`,
-                `<:replycontinued:1015235683209707534> Reason: \`${warn.warnReason}\``,
-                `<:reply:1015235235195146301> Date: ${warn.warnDate}`,
+                `User: ${warn.userId}`,
+                `Reason: \`${warn.warnReason}\``,
+                `Date: ${warn.warnDate}`,
               ].join("\n");
             })
             .join("\n\n");

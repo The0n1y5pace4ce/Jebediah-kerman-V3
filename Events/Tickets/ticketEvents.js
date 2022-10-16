@@ -97,12 +97,10 @@ const {
                       new ButtonBuilder()
                         .setCustomId("claimTicket")
                         .setLabel("Claim")
-                        .setEmoji("<:4402yesicon:1015234867530829834>")
                         .setStyle(ButtonStyle.Success),
                       new ButtonBuilder()
                         .setCustomId("closeTicket")
                         .setLabel("Close")
-                        .setEmoji("<:9061squareleave:1015234841190600756>")
                         .setStyle(ButtonStyle.Success)
                     ),
                   ],

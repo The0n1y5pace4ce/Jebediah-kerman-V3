@@ -21,20 +21,20 @@ module.exports = {
 		const Reason = interaction.options.getString("reason") || "no reason"
 
 		const success = new EmbedBuilder()
-		.setDescription(`<:yes:895520458152226906> **${Target} was Successfully kicked**\n ||This Member was kicked for ${Reason}||`)
+		.setDescription(`**${Target} was Successfully kicked**\n ||This Member was kicked for ${Reason}||`)
 		.setColor("DarkAqua")
 		if (Target.id ===
             interaction.member.id)
-		return interaction.reply({embeds: [new EmbedBuilder().setColor("Blue").setDescription("<:info:896693747570597929> You can't kick yourself")]})
+		return interaction.reply({embeds: [new EmbedBuilder().setColor("Blue").setDescription("You can't kick yourself")]})
 
 		if (Target.permissions.has(PermissionFlagsBits.Administrator))
-		return interaction.reply({embeds: [new EmbedBuilder().setColor("Blue").setDescription("<:info:896693747570597929> **LoL** You can't kick an Admin")]})
+		return interaction.reply({embeds: [new EmbedBuilder().setColor("Blue").setDescription("**LoL** You can't kick an Admin")]})
 		
 		if (Target.permissions.has(PermissionFlagsBits.ManageGuild))
-		return interaction.reply({embeds: [new EmbedBuilder().setColor("Blue").setDescription("<:info:896693747570597929> **LoL** You can't kick a Moderator")]})
+		return interaction.reply({embeds: [new EmbedBuilder().setColor("Blue").setDescription("**LoL** You can't kick a Moderator")]})
        
         Target.kick({reason: Reason}).then(
-            Target.send({embeds: [new EmbedBuilder().setColor("Blue").setDescription(`<:info:896693747570597929> You were kicked from **${guild.name}** for __${Reason}__ `)], content: "Remember to not to repeat that mistake again you can join using https://discord.gg/R8XGQ3vNbU"})
+            Target.send({embeds: [new EmbedBuilder().setColor("Blue").setDescription(`You were kicked from **${guild.name}** for __${Reason}__ `)], content: "Remember to not to repeat that mistake again you can join using https://discord.gg/R8XGQ3vNbU"})
             .catch((err))
         )
 
