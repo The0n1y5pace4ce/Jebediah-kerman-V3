@@ -1,5 +1,3 @@
-
-
 async function loadShoukakuNodes(client) {
   const { magenta, green } = require("chalk");
   const { loadFiles } = require("../Functions/fileLoader");

@@ -1,7 +1,6 @@
 const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js')
 const { Guilds, GuildMembers, GuildMessages, GuildVoiceStates, MessageContent, GuildPresences } = GatewayIntentBits
 const { User, Message, GuildMember, ThreadMember, Channel} = Partials
-const fs = require('fs')
 const  { token } = require('./config.json')
 const { Connectors } = require("shoukaku");
 const { Kazagumo } = require("kazagumo");
@@ -27,6 +26,7 @@ client.modals = new Collection();
 client.selectMenus = new Collection();
 loadSelectMenus(client);
 
+require('./Functions/GiveawaySys')(client)
 
 loadEvents(client);
 loadButtons(client);
